@@ -26,7 +26,7 @@ namespace Panda
         public static Random Random = new Random();
         public MainModule()
         {
-            Get["/"] = _ => "<form action=\"upload?output=gyazo\" method=\"post\" enctype=\"multipart/form-data\"><input type=\"file\" id=\"file\" name=\"file\"><input type=\"submit\"></form>";
+            Get["/"] = _ => "<form action=\"upload.php?output=gyazo\" method=\"post\" enctype=\"multipart/form-data\"><input type=\"file\" id=\"file\" name=\"file\"><input type=\"submit\"></form>";
             Get["/{filename}"] = (parameters) =>
             {
                 string filename = parameters["filename"].ToString();
@@ -44,7 +44,7 @@ namespace Panda
                 string actual_path = new DirectoryInfo(Path.Combine(FilePath, id)).GetFiles()[0].FullName;
                 return Response.FromStream(new FileStream(actual_path, FileMode.Open), MimeMapping.GetMimeMapping(actual_path));
             };
-            Post["/upload"] = (parameters) =>
+            Post["/upload.php"] = (parameters) =>
             {
                 if (!this.Request.Files.Any())
                     return "You didn't send any files";
