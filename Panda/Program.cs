@@ -48,7 +48,7 @@ namespace Panda
             {
                 if (!this.Request.Files.Any())
                     return "You didn't send any files";
-                string output = this.Request.Query["output"] ?? "gyazo";
+                string output = this.Request.Query["output"] ?? "json";
                 Func<string> RandomName = () => { return new string(new char[4].Select(c => (char)Random.Next(65, 90)).ToArray()); };
                 string ret = "";
                 if (output == "json")
