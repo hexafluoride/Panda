@@ -91,7 +91,7 @@ namespace Panda
                     ret = ret.Substring(0, ret.Length - 1);
                     ret += "]}";
                 }
-                if (output == "text")
+                if (output == "gyazo")
                     ret = ret.Trim();
                 return Response.FromStream(new MemoryStream(System.Text.Encoding.UTF8.GetBytes(ret)), output == "json" ? "application/json" : output == "csv" ? "text/csv" : output == "html" ? "text/html" : "text/plain");
             };
