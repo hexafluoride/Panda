@@ -23,7 +23,7 @@ namespace Panda
         public static List<string> Files = new List<string>();
         public static string FilePath = "./files";
         public static string URL = "http://localhost:8888/";
-        public static long MaxLength = 10000;
+        public static long MaxLength = 1000000;
         public static Random Random = new Random();
         public MainModule()
         {
@@ -61,7 +61,7 @@ namespace Panda
                     string rnd = RandomName();
                     Directory.CreateDirectory(Path.Combine(FilePath, rnd));
                     file.Value.CopyTo(new FileStream(Path.Combine(FilePath, rnd, file.Name), FileMode.Create));
-                    Files.Add(rnd);
+                    Files.Add(rnd.ToLower());
                     string hash = BitConverter.ToString(new System.Security.Cryptography.SHA1CryptoServiceProvider().ComputeHash(file.Value)).ToLower().Replace("-", "");
                     if (file.Value.Length > MaxLength)
                     {
