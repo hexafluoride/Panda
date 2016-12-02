@@ -12,7 +12,6 @@ namespace Panda
     {
         static void Main(string[] args)
         {
-            System.Globalization.CultureInfo.DefaultThreadCurrentCulture = System.Globalization.CultureInfo.GetCultureInfo("en-us");
             MainModule.Files = new DirectoryInfo(MainModule.FilePath).GetDirectories().Select(d => d.Name.ToLower()).ToList(); // populate cached file list
             new NancyHost(new Uri(MainModule.URL)).Start();
             Console.ReadLine();
@@ -60,7 +59,8 @@ namespace Panda
                 {
                     string rnd = RandomName();
                     Directory.CreateDirectory(Path.Combine(FilePath, rnd));
-                    file.Value.CopyTo(new FileStream(Path.Combine(FilePath, rnd, file.Name), FileMode.Create));
+                    using (var fs = new FileStream(Path.Combine(FilePath, rnd, file.Name), FileMode.Create))
+                        file.Value.CopyTo(fs);
                     Files.Add(rnd.ToLower());
                     string hash = BitConverter.ToString(new System.Security.Cryptography.SHA1CryptoServiceProvider().ComputeHash(file.Value)).ToLower().Replace("-", "");
                     if (file.Value.Length > MaxLength)
