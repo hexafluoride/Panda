@@ -31,7 +31,7 @@ namespace Panda
             Get["/{filename}"] = (parameters) =>
             {
                 string filename = parameters["filename"].ToString();
-                string id = Path.GetFileNameWithoutExtension(filename);
+                string id = Path.GetFileNameWithoutExtension(filename).ToUpper();
                 if (!Files.Contains(id.ToLower()))
                     return HttpStatusCode.NotFound;
                 string actual_path = new DirectoryInfo(Path.Combine(FilePath, id)).GetFiles()[0].FullName;
@@ -39,7 +39,7 @@ namespace Panda
             };
             Get["/{id}/{filename}"] = (parameters) =>
             {
-                string id = parameters["id"].ToString();
+                string id = parameters["id"].ToString().ToUpper();
                 if (!Files.Contains(id.ToLower()))
                     return HttpStatusCode.NotFound;
                 string actual_path = new DirectoryInfo(Path.Combine(FilePath, id)).GetFiles()[0].FullName;
