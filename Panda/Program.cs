@@ -59,7 +59,7 @@ namespace Panda
                 {
                     string rnd = RandomName();
                     Directory.CreateDirectory(Path.Combine(FilePath, rnd));
-                    using (var fs = new FileStream(Path.Combine(FilePath, rnd, file.Name), FileMode.Create))
+                    using (var fs = new FileStream(Path.Combine(FilePath, rnd, Path.GetFileName(file.Name)), FileMode.Create))
                         file.Value.CopyTo(fs);
                     Files.Add(rnd.ToLower());
                     string hash = BitConverter.ToString(new System.Security.Cryptography.SHA1CryptoServiceProvider().ComputeHash(file.Value)).ToLower().Replace("-", "");
@@ -74,10 +74,10 @@ namespace Panda
                             ret += URL + rnd + Path.GetExtension(file.Name) + "<br>";
                             break;
                         case "json":
-                            ret += "{\"name\": \"" + file.Name + "\", \"url\": \"" + URL + rnd + Path.GetExtension(file.Name) + "\", \"hash\": \"" + hash + "\", \"size\": " + file.Value.Length + "},";
+                            ret += "{\"name\": \"" + Path.GetFileName(file.Name) + "\", \"url\": \"" + URL + rnd + Path.GetExtension(file.Name) + "\", \"hash\": \"" + hash + "\", \"size\": " + file.Value.Length + "},";
                             break;
                         case "csv":
-                            ret += file.Name + "," + URL + rnd + Path.GetExtension(file.Name) + "," + hash + "," + file.Value.Length + "\n";
+                            ret += Path.GetFileName(file.Name) + "," + URL + rnd + Path.GetExtension(file.Name) + "," + hash + "," + file.Value.Length + "\n";
                             break;
                         case "gyazo":
                         case "text":
